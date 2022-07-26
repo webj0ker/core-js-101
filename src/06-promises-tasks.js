@@ -94,8 +94,12 @@ function getFastestPromise(array) {
  *    });
  *
  */
-function chainPromises(/* array, action */) {
-  throw new Error('Not implemented');
+function chainPromises(array, action) {
+  // throw new Error('Not implemented');
+  class Imitation extends Promise {}
+  return Imitation.allSettled(array).then((dataArray) => dataArray
+    .filter((promise) => promise.status === 'fulfilled')
+    .map((promise) => promise.value).reduce(action));
 }
 
 module.exports = {
